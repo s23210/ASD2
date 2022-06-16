@@ -1,45 +1,9 @@
-/****************************************************************************
-*****************************************************************************
-*****************************************************************************
-**********                                                         **********
-**********           Heap (Priority Queue Representation)          **********
-**********                                                         **********
-**********                  C++ Implementation                     **********
-**********                                                         **********
-**********                      Writen By                          **********
-**********                                                         **********
-**********                     YAZAN OBEIDI                        **********
-**********                                                         **********
-*****************************************************************************
-*****************************************************************************
-*****************************************************************************
-***                                                                       ***
-***   Copyright 2015 Yazan Obeidi                                 		  ***
-***                                                                       ***
-***   This is free software: you can redistribute it and/or modify        ***
-***   it under the terms of the GNU General Public License as published   ***
-***   by the Free Software Foundation, either version 3 of the License,   ***
-***   or (at your option) any later version.                              ***
-***                                                                       ***
-***   This program is distributed in the hope that it will be useful,     ***
-***   but WITHOUT ANY WARRANTY; without even the implied warranty of      ***
-***   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU    ***
-***   General Public License for more details:                            ***
-***    <http://www.gnu.org/licenses/>              						  ***
-***                                                                       ***
-****************************************************************************/
-
-
 #ifndef PRIORITY_QUEUE_HPP
 #define PRIORITY_QUEUE_HPP
 
 #include "node.h"
 
 class PriorityQueue {
-public:
-  // Can be seen externally as PriorityQueue::Node
-  typedef int Node;
-
 private:
 
   // Sequential representation of the priority queue.

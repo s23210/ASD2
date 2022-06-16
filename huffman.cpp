@@ -94,9 +94,9 @@ Node * createHuffmanTree(string line){
  }
  Node *root; //definiujemy zmienną, która docelowo będzie korzeniem naszego drzewa
  while(nodes.size() > 1){ //następnie iterujemy, dopóki w nodes nie zostanie ostatni element - korzeń drzewa
-  Node *n1 = nodes.top(); //pobieramy pierwszy, najmniejszy element z priority queue
+  Node *n1 = nodes.top().toNode(); //pobieramy pierwszy, najmniejszy element z priority queue
   nodes.pop(); //a następnie go usuwamy
-  Node *n2 = nodes.top(); //ponawiamy powyższe kroki, aby uzyskać drugi, najmniejszy element
+  Node *n2 = nodes.top().toNode(); //ponawiamy powyższe kroki, aby uzyskać drugi, najmniejszy element
   nodes.pop();
   if(n1->value == n2->value && !n1->isLeaf()){ //jeżeli oba liście mają tą samą wartość, a jeden z nich jest kontenerem, to powinien on być traktowany jako większy element
    Node *pom = n1; //dlatego w takiej sytuacji podmieniamy wskaźniki

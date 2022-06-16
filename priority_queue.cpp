@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cmath> //used to compute log(x)
 #include "priority_queue.h"
@@ -40,11 +39,11 @@ void PriorityQueue::print() const {
 			level++;
 			std::cout << std::endl;
 		}
-		std::cout << heap_[i] << " ";
+		std::cout << heap_[i].value << " ";
 	}
 }
  // Returns the top element of the priority queue, but does not remove it.
-PriorityQueue::Node PriorityQueue::top() const {
+Node PriorityQueue::top() const {
 	return heap_[1];
 }
  // Inserts value into the priority queue. Returns true if successful, and 
@@ -53,7 +52,7 @@ bool PriorityQueue::push(Node val) {
 	if(full()) return false; //full queue
 	heap_[++size_] = val;
 	int index = size_;
-	while(heap_[index] < heap_[index/2] && index/2 != 0) { //loop while inserted node greater than heap parent, &&: stop if reached heap[0]
+	while(heap_[index].value < heap_[index/2].value && index/2 != 0) { //loop while inserted node greater than heap parent, &&: stop if reached heap[0]
 		Node temp = heap_[index]; //if true, swap inserted node & parent
 		heap_[index] = heap_[index/2];
 		heap_[index/2] = temp;
@@ -71,9 +70,9 @@ bool PriorityQueue::pop() {
 		int index = 1; //initialize index value to point to node we just inserted into highest priority position (newNode)
 		int larger_child; //variable to fill with index of largest child of node (to trickle it down)
 		//while not a leaf node AND newNode is less than one of its children, bubble newNode down
-		while (2*index > size_ && (heap_[index] > heap_[2*index] || heap_[index] > heap_[2*index + 1])) {
+		while (2*index > size_ && (heap_[index].value > heap_[2*index].value || heap_[index].value > heap_[2*index + 1].value)) {
 			//if/else: set larger_child to right or left of newNode
-			if (heap_[2*index] < heap_[2*index+1]) larger_child = 2*index; 
+			if (heap_[2*index].value < heap_[2*index+1].value) larger_child = 2*index; 
 			else larger_child = 2*index+1;
 			//Swap values with newNode and larger child
 			Node temp = heap_[index]; 
