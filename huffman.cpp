@@ -90,7 +90,7 @@ Node * createHuffmanTree(string line){
 
 
  for(auto entry : counter){
-  nodes.push(new Node(entry.first, entry.second)); //tworzymy liście drzewa, bazując na znakach i ich ilości wystąpień
+  nodes.push(new Node(entry.first, entry.second, nullptr, nullptr)); //tworzymy liście drzewa, bazując na znakach i ich ilości wystąpień
  }
  Node *root; //definiujemy zmienną, która docelowo będzie korzeniem naszego drzewa
  while(nodes.size() > 1){ //następnie iterujemy, dopóki w nodes nie zostanie ostatni element - korzeń drzewa
