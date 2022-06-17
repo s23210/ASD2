@@ -5,7 +5,6 @@
 #include <map>
 #include <vector>
 #include <algorithm>
-#include "heap.h"
 #include "node.h"
 #include "priority_queue.h"
 
@@ -28,55 +27,73 @@ Node *createHuffmanTree(string line) {
       for (auto entry : counter) {
             nodes.push(new Node(entry.first, entry.second, nullptr, nullptr));
       }
-      Node *root; // definicja korzenia drzewa
-      while (nodes.size() > 1) {                                      // iteracja do momentu aż zostanie sam korzeń
-            Node *n1 = nodes.top().toNode(); // pobranie pierwszego, najmniejszego elementu z kolejki
-            nodes.pop();                     // usunięciego elementu z kolejki
-            Node *n2 = nodes.top().toNode(); // to samo, tylko drugi najmniejszy element
+      // definicja korzenia drzewa
+      Node *root;
+      // iteracja do momentu aż zostanie sam korzeń
+      while (nodes.size() > 1) {
+            // pobranie pierwszego, najmniejszego elementu z kolejki
+            Node *n1 = nodes.top().toNode();
+            // usunięciego elementu z kolejki 
             nodes.pop();
-            if (n1->value == n2->value && !n1->isLeaf()) {                     // jeżeli oba liście mają tą samą wartość, a jeden z nich jest kontenerem, to powinien on być traktowany jako większy element
+            // to samo, tylko drugi najmniejszy element
+            Node *n2 = nodes.top().toNode(); 
+            nodes.pop();
+            // jeżeli oba liście mają tą samą wartość, a jeden z nich jest kontenerem, to powinien on być traktowany jako większy element
+            if (n1->value == n2->value && !n1->isLeaf()) {
                   Node *pom = n1; // dlatego w takiej sytuacji podmieniamy wskaźniki
                   n1 = n2;
                   n2 = pom;
             }
-            root = new Node('\0', n1->value + n2->value, n1, n2); // tworzymy liść-kontener, który będzie przechowywać dwa powyższe elementy i sumę ich wartości
-            nodes.push(root);                                     // a następnie dodajemy go do priority queue
+            // tworzenie kontenera, który będzie przechowywać dwa liście i sumę ich wartości
+            root = new Node('\0', n1->value + n2->value, n1, n2); 
+            // dodanie kontenera do kolejki priorytetowej
+            nodes.push(root);
       }
-      return root; // gdy zostanie tylko root, to drzewo zostało zbudowane
+      // gdy zostanie tylko root, to drzewo zostało zbudowane
+      return root;
 }
 
-// Tworzymy rekurencyjną funkcję, która zakoduje elementy zależnie od ich pozycji w drzewie.
-// Jako argumenty podajemy korzeń drzewa, tekst pomocniczy przy rekurencji, a także mapę kodowania
+// funkcja kodująca znaki zależnie od ich pozycji w drzewie
 void encodeNodes(Node *node, string val, map<char, string> *map) {
-      if (node == nullptr) {             // warunek STOP funkcji rekurencyjnej:
-            return; // jeżeli trafimy na koniec drzewa, przerywamy działanie
+      // przerwanie, jeśli natrafi na koniec drzewa
+      if (node == nullptr) {
+            return; 
       }
-      if (node->isLeaf()) {                                                     // jeżeli jest to liść przechowujący znak
-            cout << node->character << " : " + val << endl; // to drukujemy go i jego zakodowaną wartość
-            map->insert({node->character, val});            // a następnie dodajemy obie wartości do mapy
+      // jeśli jest liść, to zapisuje kod dla danego znaku do mapy
+      if (node->isLeaf()) {
+            cout << node->character << " : " + val << endl;
+            map->insert({node->character, val});
       }
-      encodeNodes(node->left, val + '0', map);  // wywołujemy jeszcze raz funkcję dla lewej strony drzewa - rekurencja
-      encodeNodes(node->right, val + '1', map); // wywołujemy jeszcze raz funkcję dla prawej strony drzewa - rekurencja
+      // rekurencyjne wywołanie tej funkcji dla lewego i prawego dziecka 
+      encodeNodes(node->left, val + '0', map);
+      encodeNodes(node->right, val + '1', map);
 }
 
 // funkcja odkodowująca bazująca na drzewie
 string decode(Node *root, string encoded) {
       string decoded = "";      // zmienna pomocnicza
-      Node *currentNode = root; // wskaźnik na aktualnie sprawdzany liść
-      for (char c : encoded) { // iterujemy poprzez zakodowany tekst
-            if (c == '0') { // jeżeli iterowany znak jest zerem, to oznacza, że musimy iść w lewo
-                  if (currentNode->left->isLeaf()) {                                              // jeżeli dziecko po lewo jest liściem przechowującym znak
-                        decoded += currentNode->left->character; // dodajemy ten znak do zmiennej pomocniczej
-                        currentNode = root;                      // a następnie wracamy na początek drzewa
+      Node *currentNode = root;
+      // iteracja po zakodonowanym tekscie
+      for (char c : encoded) {
+            // jeżeli iterowany znak jest zerem, to przechodzę do lewego dziecka
+            if (c == '0') { 
+                  // jeżeli lewe dziecko jest liściem, to zapisuje znak do zmiennej pomocniczej i wracam do korzenia
+                  if (currentNode->left->isLeaf()) {                                              
+                        decoded += currentNode->left->character;
+                        currentNode = root;
                   } else {
-                        currentNode = currentNode->left; // jeżeli trafiliśmy na kontener, ustawiamy na niego wskaźnik
+                        // jeżeli lewe dziecko to kontener, to przechodzę do lewego dziecka
+                        currentNode = currentNode->left;
                   }
-            } else { // jeżeli jest to inny znak (1), to przechodzimy na prawą stronę
-                  if (currentNode->right->isLeaf()) {                                               // jeżeli dziecko po prawo jest liściem przechowującym znak
-                        decoded += currentNode->right->character; // dodajemy ten znak do zmiennej pomocniczej
-                        currentNode = root;                       // a następnie wracamy na początek drzewa
+            // jeżeli iterowany znak jest równy 1, to przechodzę do prawego dziecka      
+            } else {
+                  // jeżeli prawe dziecko jest liściem, to zapisuje znak do zmiennej pomocniczej i wracam do korzenia
+                  if (currentNode->right->isLeaf()) {
+                        decoded += currentNode->right->character;
+                        currentNode = root;
                   } else {
-                        currentNode = currentNode->right; // jeżeli trafiliśmy na kontener, ustawiamy na niego wskaźnik
+                        // jeżeli prawe dziecko to kontener, to przechodzę do prawego dziecka
+                        currentNode = currentNode->right;
                   }
             }
       }
