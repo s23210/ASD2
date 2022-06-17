@@ -5,10 +5,14 @@
 
 // konstruktor
 PriorityQueue::PriorityQueue(unsigned int capacity) {
+	// maksymalna ilość elementów jaka może znajdować się w kolejce
 	capacity_ = capacity;
+	// ilość elementów w kolejce
 	size_ = 0;
+	// kopiec liści
 	heap_ = new Node[capacity_ + 1];
 	// inicjalizacja kopca
+	// heap_[0] nie jest używany, więc zostanie zignorowany i zaczynam od 1
 	for (int i = 0; i < capacity_; i++)
 		heap_[i] = 0;
 }
@@ -29,11 +33,7 @@ bool PriorityQueue::empty() const {
 bool PriorityQueue::full() const {
 	return (size_ == capacity_);
 }
-int log2(int val) { // helper function to decide when new level needs to be made
-	return log(val) / log(2);
-};
-
-// zwracanie najmniejszej wartości kopca ?
+// zwracanie najmniejszej wartości kopca
 Node PriorityQueue::top() const {
 	return heap_[1];
 }
@@ -45,12 +45,14 @@ bool PriorityQueue::push(Node val) {
 		return false;
 	heap_[++size_] = val;
 	int index = size_;
-	// loop while inserted node greater than heap parent, &&: stop if reached heap[0]
-	while (heap_[index].value < heap_[index / 2].value && index / 2 != 0) {							  
-		Node temp = heap_[index]; // if true, swap inserted node & parent
+	// pętla wykonuje się dopóki wstawiony element jest mniejszy niż rodzic kopca, przerywa się gdy dojdzie do heap[0]
+	while (heap_[index].value < heap_[index / 2].value && index / 2 != 0) {
+		// zamienia miejsca liścia i jego rodzica							  
+		Node temp = heap_[index];
 		heap_[index] = heap_[index / 2];
 		heap_[index / 2] = temp;
-		index = index / 2; // set new parent index
+		// nowy index to rodzic wstawionego elementu
+		index = index / 2;
 	}
 	return true;
 }
@@ -61,22 +63,25 @@ bool PriorityQueue::pop() {
 	if (empty())
 		return false;
 	else {
-		heap_[1] = heap_[size_]; // replace highest priority with bottom-right most leaf in heap (newNode)
+		// zamiana pierwszego elementu z ostatnim prawym dzieckiem
+		heap_[1] = heap_[size_];
 		size_--;
-		int index = 1;	  // initialize index value to point to node we just inserted into highest priority position (newNode)
-		int larger_child; // variable to fill with index of largest child of node (to trickle it down)
-		// while not a leaf node AND newNode is less than one of its children, bubble newNode down
+		// inicjalizacja indeksu liścia do usunięcia
+		int index = 1;
+		// index najmniejszego dziecka
+		int smaller_child;
+		// pętla wykonuje się dopóki heap_[index] nie jest liściem i nowy liść jest mniejszy niż jedno z jego dzieci, przerywa się gdy dojdzie do korzenia
 		while (2 * index < size_ && (heap_[index].value < heap_[2 * index].value || heap_[index].value > heap_[2 * index + 1].value)) {
-			// if/else: set larger_child to right or left of newNode
+			// ustawienie smaller_child na prawe lub lewe dziecko nowego liścia
 			if (heap_[2 * index].value < heap_[2 * index + 1].value)
-				larger_child = 2 * index;
+				smaller_child = 2 * index;
 			else
-				larger_child = 2 * index + 1;
-			// Swap values with newNode and larger child
+				smaller_child = 2 * index + 1;
+			// zamienianie miejscami nowego liścia z mniejszym dzieckiem
 			Node temp = heap_[index];
-			heap_[index] = heap_[larger_child];
-			heap_[larger_child] = temp;
-			index = larger_child;
+			heap_[index] = heap_[smaller_child];
+			heap_[smaller_child] = temp;
+			index = smaller_child;
 		}
 		return true;
 	}

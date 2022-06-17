@@ -117,7 +117,7 @@ int main() {
       // tworzenie drzewa
       Node *root = createHuffmanTree(line);
 
-      // kodujemy wartości w drzewie, drukujemy je i dodajemy do nowej mapy, która powiąże znaki z ich zakodowanymi wartościami
+      // koduje wartości w drzewie, drukuje je i dodaje do nowej mapy, która powiąże znaki z ich zakodowanymi wartościami
       cout << "Tablica kodowania Huffmana:" << endl;
       map<char, string> encodedValues;
       encodeNodes(root, "", &encodedValues);
