@@ -32,19 +32,7 @@ bool PriorityQueue::full() const {
 int log2(int val) { // helper function to decide when new level needs to be made
 	return log(val) / log(2);
 };
-// drukowanie kolejki priorytetowej
-void PriorityQueue::print() const {
-	double level = 0.0;
-	std::cout << "Ordered Priority Queue:\n";
-	for (int i = 1; i < size_ + 1; i++) {
-		// adds a break to the tree to maintain binary heap structure albiet floating left
-		if (log2(i) >= level + 1) {
-			level++;
-			std::cout << std::endl;
-		}
-		std::cout << heap_[i].value << " ";
-	}
-}
+
 // zwracanie najmniejszej wartości kopca ?
 Node PriorityQueue::top() const {
 	return heap_[1];

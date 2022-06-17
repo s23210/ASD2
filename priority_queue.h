@@ -29,10 +29,10 @@ public:
   // Returns the number of elements in the priority queue.
   unsigned int size() const;
   // Returns true if the priority queue is empty, and false otherwise.
-  bool empty() const; // NIE POTRZEBA?
+  bool empty() const;
   // Returns true if the priority queue is full, and false otherwise.
-  bool full() const; // NIE POTRZEBA?
-  void print() const; // NIE POTRZEBA?
+  bool full() const;
+
   // Returns the max element of the priority queue, but does not remove it.
   Node top() const;
   bool push(Node val);

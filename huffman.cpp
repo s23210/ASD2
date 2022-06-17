@@ -72,7 +72,8 @@ void encodeNodes(Node *node, string val, map<char, string> *map) {
 
 // funkcja odkodowująca bazująca na drzewie
 string decode(Node *root, string encoded) {
-      string decoded = "";      // zmienna pomocnicza
+      // zmienna pomocnicza
+      string decoded = "";
       Node *currentNode = root;
       // iteracja po zakodonowanym tekscie
       for (char c : encoded) {
