@@ -72,7 +72,7 @@ bool PriorityQueue::pop() {
 		//while not a leaf node AND newNode is less than one of its children, bubble newNode down
 		while (2*index < size_ && (heap_[index].value < heap_[2*index].value || heap_[index].value > heap_[2*index + 1].value)) {
 			//if/else: set larger_child to right or left of newNode
-			if (heap_[2*index].value > heap_[2*index+1].value) larger_child = 2*index; 
+			if (heap_[2*index].value < heap_[2*index+1].value) larger_child = 2*index; 
 			else larger_child = 2*index+1;
 			//Swap values with newNode and larger child
 			Node temp = heap_[index]; 

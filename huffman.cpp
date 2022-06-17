@@ -36,77 +36,21 @@ using namespace std;
 
 
 
-
-
-//Tworzymy strukturę, która pomoże nam przy tworzeniu drzewa kodowania.
-//Będzie ona porównywać dwa liście z drzewa/
-struct comparator{
- bool operator() (Node *a, Node *b){
-  if(a->value != b->value) //jeżeli liście są różnej wartości
-  return a->value > b->value; //wykonaj zwykłe porównanie
- if(!a->isLeaf() && b->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
-  return false;
- if(!b->isLeaf() && a->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
-  return true;
- if(a->isLeaf() && b->isLeaf()) //jeżeli oba są liściami
-  return a->character > b->character; //to decyduje kolejność alfabetyczna
-        return true; // jeżeli żaden z powyższych warunków nie zostanie spełniony, zwracamy true
- }
-};
-
-
-
-
-
-
-
-
-
-
-void heapify(Node arr[], int n, int i)
-{
-    int smallest = i; // Initialize smallest as root
-    int l = 2 * i + 1; // left = 2*i + 1
-    int r = 2 * i + 2; // right = 2*i + 2
- 
-    // If left child is smaller than root
-    if (l < n && arr[l].value < arr[smallest].value)
-        smallest = l;
- 
-    // If right child is smaller than smallest so far
-    if (r < n && arr[r].value < arr[smallest].value)
-        smallest = r;
- 
-    // If smallest is not root
-    if (smallest != i) {
-        swap(arr[i], arr[smallest]);
- 
-        // Recursively heapify the affected sub-tree
-        heapify(arr, n, smallest);
-    }
-}
- 
-// main function to do heap sort
-void heapSort(Node arr[], int n)
-{
-    // Build heap (rearrange array)
-    for (int i = n / 2 - 1; i >= 0; i--)
-        heapify(arr, n, i);
- 
-    // One by one extract an element from heap
-    for (int i = n - 1; i >= 0; i--) {
-        // Move current root to end
-        swap(arr[0], arr[i]);
- 
-        // call min heapify on the reduced heap
-        heapify(arr, i, 0);
-    }
-}
-
-
-
-
-
+// //Tworzymy strukturę, która pomoże nam przy tworzeniu drzewa kodowania.
+// //Będzie ona porównywać dwa liście z drzewa/
+// struct comparator{
+//  bool operator() (Node *a, Node *b){
+//   if(a->value != b->value) //jeżeli liście są różnej wartości
+//   return a->value > b->value; //wykonaj zwykłe porównanie
+//  if(!a->isLeaf() && b->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
+//   return false;
+//  if(!b->isLeaf() && a->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
+//   return true;
+//  if(a->isLeaf() && b->isLeaf()) //jeżeli oba są liściami
+//   return a->character > b->character; //to decyduje kolejność alfabetyczna
+//         return true; // jeżeli żaden z powyższych warunków nie zostanie spełniony, zwracamy true
+//  }
+// };
 
 
 
@@ -123,17 +67,6 @@ Node * createHuffmanTree(string line){
   }
  }
 
-//  struct Heap {
-//       void clear();
-//       int size();
-//       void push(Node *node);
-//       bool empty();
-//       Node *top();
-//       Node *pop();
-//  };
-
-
-
  
  
  //Tworzymy obiekt priority_queue, który będzie przechowywać nieprzypisane elementy drzewa.
@@ -141,17 +74,8 @@ Node * createHuffmanTree(string line){
  //Do porównywania elementów wykorzystujemy wcześniej zdefiniowaną strukturę comparator.
 //  priority_queue<Node*, vector<Node*>, comparator> nodes; 
 
-// PriorityQueue nodes(11);
 
-//make queue of nodes
 PriorityQueue nodes(counter.size());
-
-
-//add new node to the queue
-// for(auto it = counter.begin(); it != counter.end(); it++){
-//       Node * node = new Node(it->first, it->second, nullptr, nullptr);
-//       nodes[it->second] = node;
-// }
 
 // int N = sizeof(nodes)/sizeof(nodes[0]);
 
@@ -176,7 +100,6 @@ PriorityQueue nodes(counter.size());
 }
 
 
-
 //Tworzymy rekurencyjną funkcję, która zakoduje elementy zależnie od ich pozycji w drzewie.
 //Jako argumenty podajemy korzeń drzewa, tekst pomocniczy przy rekurencji, a także mapę kodowania
 void encodeNodes(Node *node, string val, map<char, string> *map) {
@@ -190,9 +113,6 @@ void encodeNodes(Node *node, string val, map<char, string> *map) {
  encodeNodes(node->left, val + '0', map); //wywołujemy jeszcze raz funkcję dla lewej strony drzewa - rekurencja
  encodeNodes(node->right, val + '1', map); //wywołujemy jeszcze raz funkcję dla prawej strony drzewa - rekurencja
 }
-
-
-
 
 
 //Tworzymy funkcję, która odkoduje zakodowany tekst bazując na zbudowanym drzewie.
@@ -227,9 +147,6 @@ string decode(Node *root, string encoded){
 }
 
 
-
-
-
 int main(){
  string line;
 
@@ -262,9 +179,6 @@ if(output1.is_open()) {
       }
 
 
-
-
-
  //kodujemy tekst, bazując na utworzonej mapie kodowania
  string encodedLine = "";
  for(char c : line){
@@ -276,16 +190,6 @@ if(output1.is_open()) {
 output1 << encodedLine << endl;
 
 output1.close();
-//zapisz zakodowany tekst do pliku output.txt
-// ofstream output("output.txt");
-// if(output.is_open()) {
-//       output << encodedLine;
-// } else {
-//       cout << "Nie udalo sie otworzyc pliku output.txt" << endl;
-//       return 1;
-//       }
-// output.close();
-
 
  cout << "Tekst po zakodowaniu: " << encodedLine << endl;
  
