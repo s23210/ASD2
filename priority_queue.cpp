@@ -52,7 +52,7 @@ bool PriorityQueue::push(Node val) {
 	if(full()) return false; //full queue
 	heap_[++size_] = val;
 	int index = size_;
-	while(heap_[index].value > heap_[index/2].value && index/2 != 0) { //loop while inserted node greater than heap parent, &&: stop if reached heap[0]
+	while(heap_[index].value < heap_[index/2].value && index/2 != 0) { //loop while inserted node greater than heap parent, &&: stop if reached heap[0]
 		Node temp = heap_[index]; //if true, swap inserted node & parent
 		heap_[index] = heap_[index/2];
 		heap_[index/2] = temp;
