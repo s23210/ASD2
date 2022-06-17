@@ -12,8 +12,8 @@ PriorityQueue::PriorityQueue(unsigned int capacity) {
 	for (int i = 0; i < capacity_; i++)
 		heap_[i] = 0;
 }
-// Destructor of the class PriorityQueue. It deallocates the memory space
-// allocated for the priority queue.
+
+// destruktor
 PriorityQueue::~PriorityQueue() {
 	delete[] heap_;
 }
@@ -21,11 +21,11 @@ PriorityQueue::~PriorityQueue() {
 unsigned int PriorityQueue::size() const {
 	return size_;
 }
-// Returns true if the priority queue is empty, and false otherwise.
+// zwraca true jeśli kopiec jest pusty, false w przeciwnym wypadku
 bool PriorityQueue::empty() const {
 	return !size_;
 }
-// Returns true if the priority queue is full, and false otherwise.
+// zwraca true jeśli kopiec jest pełny, false w przeciwnym wypadku
 bool PriorityQueue::full() const {
 	return (size_ == capacity_);
 }

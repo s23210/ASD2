@@ -24,8 +24,6 @@ public:
   // Constructor initializes heap_ to an array of (capacity_ + 1) size, so
   // that there are at most capacity_ elements in the priority queue.
   PriorityQueue(unsigned int);
-  // Destructor of the class PriorityQueue. It deallocates the memory space
-  // allocated for the priority queue.
   ~PriorityQueue();
 
   // Returns the number of elements in the priority queue.
