@@ -3,6 +3,7 @@
 
 #include "node.h"
 
+// klasa PriorityQueue
 class PriorityQueue {
 private:
   // Sequential representation of the priority queue.

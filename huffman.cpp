@@ -38,9 +38,10 @@ Node *createHuffmanTree(string line) {
             // to samo, tylko drugi najmniejszy element
             Node *n2 = nodes.top().toNode(); 
             nodes.pop();
-            // jeżeli oba liście mają tą samą wartość, a jeden z nich jest kontenerem, to powinien on być traktowany jako większy element
+            // jeżeli oba liście mają tą samą wartość, a jeden z nich jest kontenerem, to powinien on być traktowany jako większy
             if (n1->value == n2->value && !n1->isLeaf()) {
-                  Node *pom = n1; // dlatego w takiej sytuacji podmieniamy wskaźniki
+                  // zamiana wskaźników
+                  Node *pom = n1;
                   n1 = n2;
                   n2 = pom;
             }
