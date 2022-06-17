@@ -5,7 +5,6 @@
 
 class PriorityQueue {
 private:
-
   // Sequential representation of the priority queue.
   Node* heap_;
 

@@ -11,79 +11,26 @@
 
 using namespace std;
 
-//Tworzymy strukturę liścia, który będzie podstawowym budulcem drzewa kodowania.
-//Definiujemy w niej wskaźniki na lewe dziecko i prawe dziecko,
-//jej wartość(ilość wystąpień/ich sumę), znak do kodowania, a także zakodowany znak.
-// struct Node{
-//  Node *left;
-//  Node *right;
-//  char character;
-//  int value;
-//  Node(char c, int v, Node* l=nullptr, Node* r=nullptr){ //tworzymy konstruktor struktury
-//   left = l;
-//   right = r;
-//   character = c;
-//   value = v;
-//  }
-//  ~Node(){ //pamiętajmy, że zawsze powinno się wyczyścić wszelkie zmienne
-//   delete right; //dlatego zwalniamy pamięc zajętą przez dwójkę dzieci
-//   delete left; //z racji, iż jest to destruktor, funkcja ta wywoła się również u usuniętych dzieci
-//  }
-//  bool isLeaf(){
-//   return character != '\0'; //tworzymy funkcję pomocniczą, która wskażę, czy jest to liść zawierający jakiś znak
-//  }
-// };
-
-
-
-// //Tworzymy strukturę, która pomoże nam przy tworzeniu drzewa kodowania.
-// //Będzie ona porównywać dwa liście z drzewa/
-// struct comparator{
-//  bool operator() (Node *a, Node *b){
-//   if(a->value != b->value) //jeżeli liście są różnej wartości
-//   return a->value > b->value; //wykonaj zwykłe porównanie
-//  if(!a->isLeaf() && b->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
-//   return false;
-//  if(!b->isLeaf() && a->isLeaf()) //jeżeli są równe i drugi jest kontenerem, to zawsze będzie on uznawany jako większy
-//   return true;
-//  if(a->isLeaf() && b->isLeaf()) //jeżeli oba są liściami
-//   return a->character > b->character; //to decyduje kolejność alfabetyczna
-//         return true; // jeżeli żaden z powyższych warunków nie zostanie spełniony, zwracamy true
-//  }
-// };
-
-
-
-//Definiujemy metodę, która stworzy drzewo kodowania Huffmana, a następnie zwróci jego korzeń
-//Argumentem jest tekst, który chcemy zakodować
+//tworzenie drzewa kodowania Huffmana
 Node * createHuffmanTree(string line){
- map<char, int> counter; //korzystamy z obiektu map, aby zliczyć wystąpienia dla każdego znaku
+ map<char, int> counter;
  for(char c : line){
-  if(counter.find(c) == counter.end()){ //jeżeli znaku nie ma w mapie
-   counter[c] = 1; //dodajemy go
+  if(counter.find(c) == counter.end()){
+   counter[c] = 1;
   }
   else{
-   counter[c]++; //jeżeli jest, zwiększamy jego ilość wystąpień
+   counter[c]++;
   }
  }
 
- 
- 
- //Tworzymy obiekt priority_queue, który będzie przechowywać nieprzypisane elementy drzewa.
- //Obiekt priority_queue pozwoli nam stworzyć uporządkowaną listę liści drzewa - najmniejsze będą najwyżej.
- //Do porównywania elementów wykorzystujemy wcześniej zdefiniowaną strukturę comparator.
-//  priority_queue<Node*, vector<Node*>, comparator> nodes; 
-
-
+// kolejka priorytetowa, która przechowuje wszystkie liście drzewa (najmniejsze liście będą najwyżej)
 PriorityQueue nodes(counter.size());
 
-// int N = sizeof(nodes)/sizeof(nodes[0]);
-
  for(auto entry : counter){
-  nodes.push(new Node(entry.first, entry.second, nullptr, nullptr)); //tworzymy liście drzewa, bazując na znakach i ich ilości wystąpień
+  nodes.push(new Node(entry.first, entry.second, nullptr, nullptr));
  }
- Node *root; //definiujemy zmienną, która docelowo będzie korzeniem naszego drzewa
- while(nodes.size() > 1){ //następnie iterujemy, dopóki w nodes nie zostanie ostatni element - korzeń drzewa
+ Node *root; //definicja korzenia drzewa
+ while(nodes.size() > 1){ //iteracja do momentu aż zostanie sam korzeń
   Node *n1 = nodes.top().toNode(); //pobieramy pierwszy, najmniejszy element z priority queue
   nodes.pop(); //a następnie go usuwamy
   Node *n2 = nodes.top().toNode(); //ponawiamy powyższe kroki, aby uzyskać drugi, najmniejszy element

@@ -1,6 +1,9 @@
 #ifndef NODE_H
 #define NODE_H
 
+//klasa Node (liść)
+//wskaźniki na lewe dziecko i prawe dziecko,
+//wartość(ilość wystąpień), znak do kodowania, a także zakodowany znak.
 class Node {
     public:
     Node *left;

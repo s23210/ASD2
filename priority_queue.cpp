@@ -1,5 +1,5 @@
 #include <iostream>
-#include <cmath> //used to compute log(x)
+#include <cmath>
 #include "priority_queue.h"
 #include "node.h"
 

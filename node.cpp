@@ -2,8 +2,8 @@
 
 using namespace std;
 
-
- Node::Node(char c, int v, Node* l=nullptr, Node* r=nullptr){ //tworzymy konstruktor struktury
+//konstruktor
+ Node::Node(char c, int v, Node* l=nullptr, Node* r=nullptr){
   left = l;
   right = r;
   character = c;
@@ -23,14 +23,14 @@ using namespace std;
     character = '\0';
     value = v;
     }
-//convert node* to node
+//konwersja node* na node
     Node::Node(Node* n){
     left = n->left;
     right = n->right;
     character = n->character;
     value = n->value;
     }
-//convert node to node*
+//konwersja node na node*
     Node* Node::toNode(){
     Node* n = new Node();
     n->left = left;
@@ -39,11 +39,7 @@ using namespace std;
     n->value = value;
     return n;
     }
-
-//  Node::~Node(){ //pamiętajmy, że zawsze powinno się wyczyścić wszelkie zmienne
-//   delete right; //dlatego zwalniamy pamięc zajętą przez dwójkę dzieci
-//   delete left; //z racji, iż jest to destruktor, funkcja ta wywoła się również u usuniętych dzieci
-//  }
+//funkcja sprawdzająca czy dany node jest liściem (zawiera jakiś znak)
  bool Node::isLeaf(){
-  return character != '\0'; //tworzymy funkcję pomocniczą, która wskażę, czy jest to liść zawierający jakiś znak
+  return character != '\0';
  }

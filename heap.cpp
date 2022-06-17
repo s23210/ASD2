@@ -3,8 +3,7 @@
 #include <iterator>
 #include <algorithm>
 #include <string>
-#include <sstream> //stringstream
-
+#include <sstream>
 #include "heap.h"
 
 using namespace std;
