@@ -31,19 +31,14 @@ public:
   // Returns the number of elements in the priority queue.
   unsigned int size() const;
   // Returns true if the priority queue is empty, and false otherwise.
-  bool empty() const;
+  bool empty() const; // NIE POTRZEBA?
   // Returns true if the priority queue is full, and false otherwise.
-  bool full() const;
-  // Prints the contents of the priority queue.
-  void print() const;
+  bool full() const; // NIE POTRZEBA?
+  void print() const; // NIE POTRZEBA?
   // Returns the max element of the priority queue, but does not remove it.
   Node top() const;
-
-  // Inserts value into the priority queue. Returns true if successful, and
-  // false otherwise. Assume no duplicate entries will be entered.
   bool push(Node val);
-  // Removes the top element with the minimum value (priority) and rearranges
-  // the resulting heap. Returns true if successful, and false otherwise.
   bool pop();
 };
+
 #endif

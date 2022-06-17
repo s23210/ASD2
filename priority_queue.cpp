@@ -3,19 +3,21 @@
 #include "priority_queue.h"
 #include "node.h"
 
+// konstruktor
 PriorityQueue::PriorityQueue(unsigned int capacity) {
 	capacity_ = capacity;
 	size_ = 0;
 	heap_ = new Node[capacity_ + 1];
+	// inicjalizacja kopca
 	for (int i = 0; i < capacity_; i++)
-		heap_[i] = 0; // initialize heap_
+		heap_[i] = 0;
 }
 // Destructor of the class PriorityQueue. It deallocates the memory space
 // allocated for the priority queue.
 PriorityQueue::~PriorityQueue() {
 	delete[] heap_;
 }
-// Returns the number of elements in the priority queue.
+// zwraca ilość elementów w kopcu
 unsigned int PriorityQueue::size() const {
 	return size_;
 }
@@ -30,7 +32,7 @@ bool PriorityQueue::full() const {
 int log2(int val) { // helper function to decide when new level needs to be made
 	return log(val) / log(2);
 };
-// Prints the contents of the priority queue.
+// drukowanie kolejki priorytetowej
 void PriorityQueue::print() const {
 	double level = 0.0;
 	std::cout << "Ordered Priority Queue:\n";
@@ -43,18 +45,20 @@ void PriorityQueue::print() const {
 		std::cout << heap_[i].value << " ";
 	}
 }
-// Returns the top element of the priority queue, but does not remove it.
+// zwracanie najmniejszej wartości kopca ?
 Node PriorityQueue::top() const {
 	return heap_[1];
 }
-// Inserts value into the priority queue. Returns true if successful, and
-// false otherwise. Assume no duplicate entries will be entered.
+
+// dodawanie elementu do kopca
 bool PriorityQueue::push(Node val) {
+	// sprawdzenie czy kopiec jest pelny
 	if (full())
-		return false; // full queue
+		return false;
 	heap_[++size_] = val;
 	int index = size_;
-	while (heap_[index].value < heap_[index / 2].value && index / 2 != 0) {							  // loop while inserted node greater than heap parent, &&: stop if reached heap[0]
+	// loop while inserted node greater than heap parent, &&: stop if reached heap[0]
+	while (heap_[index].value < heap_[index / 2].value && index / 2 != 0) {							  
 		Node temp = heap_[index]; // if true, swap inserted node & parent
 		heap_[index] = heap_[index / 2];
 		heap_[index / 2] = temp;
@@ -62,11 +66,12 @@ bool PriorityQueue::push(Node val) {
 	}
 	return true;
 }
-// Removes the top element with the maximum value (priority) and rearranges
-// the resulting heap. Returns true if successful, and false otherwise.
+
+// Usuwanie elementu z kopca
 bool PriorityQueue::pop() {
+	// jeśli kolejka jest pusta, to nie można usunąć elementu
 	if (empty())
-		return false; // you can't "dequeue" an empty queue...
+		return false;
 	else {
 		heap_[1] = heap_[size_]; // replace highest priority with bottom-right most leaf in heap (newNode)
 		size_--;
