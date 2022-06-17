@@ -9,7 +9,8 @@ class Node {
     int value;
     Node(char, int, Node*, Node*);
     Node();
-    Node(Node* n);
+    Node(int);
+    Node(Node*);
     Node* toNode();
     // ~Node() {};
     bool isLeaf();

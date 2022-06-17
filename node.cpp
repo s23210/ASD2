@@ -16,6 +16,13 @@ using namespace std;
     character = '\0';
     value = 0;
     }
+// konstruktor tylko z value
+    Node::Node(int v){
+    left = nullptr;
+    right = nullptr;
+    character = '\0';
+    value = v;
+    }
 //convert node* to node
     Node::Node(Node* n){
     left = n->left;

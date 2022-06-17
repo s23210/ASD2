@@ -55,6 +55,61 @@ struct comparator{
 };
 
 
+
+
+
+
+
+
+
+
+void heapify(Node arr[], int n, int i)
+{
+    int smallest = i; // Initialize smallest as root
+    int l = 2 * i + 1; // left = 2*i + 1
+    int r = 2 * i + 2; // right = 2*i + 2
+ 
+    // If left child is smaller than root
+    if (l < n && arr[l].value < arr[smallest].value)
+        smallest = l;
+ 
+    // If right child is smaller than smallest so far
+    if (r < n && arr[r].value < arr[smallest].value)
+        smallest = r;
+ 
+    // If smallest is not root
+    if (smallest != i) {
+        swap(arr[i], arr[smallest]);
+ 
+        // Recursively heapify the affected sub-tree
+        heapify(arr, n, smallest);
+    }
+}
+ 
+// main function to do heap sort
+void heapSort(Node arr[], int n)
+{
+    // Build heap (rearrange array)
+    for (int i = n / 2 - 1; i >= 0; i--)
+        heapify(arr, n, i);
+ 
+    // One by one extract an element from heap
+    for (int i = n - 1; i >= 0; i--) {
+        // Move current root to end
+        swap(arr[0], arr[i]);
+ 
+        // call min heapify on the reduced heap
+        heapify(arr, i, 0);
+    }
+}
+
+
+
+
+
+
+
+
 //Definiujemy metodę, która stworzy drzewo kodowania Huffmana, a następnie zwróci jego korzeń
 //Argumentem jest tekst, który chcemy zakodować
 Node * createHuffmanTree(string line){
@@ -86,8 +141,19 @@ Node * createHuffmanTree(string line){
  //Do porównywania elementów wykorzystujemy wcześniej zdefiniowaną strukturę comparator.
 //  priority_queue<Node*, vector<Node*>, comparator> nodes; 
 
-      PriorityQueue nodes(10);
+// PriorityQueue nodes(11);
 
+//make queue of nodes
+PriorityQueue nodes(counter.size());
+
+
+//add new node to the queue
+// for(auto it = counter.begin(); it != counter.end(); it++){
+//       Node * node = new Node(it->first, it->second, nullptr, nullptr);
+//       nodes[it->second] = node;
+// }
+
+// int N = sizeof(nodes)/sizeof(nodes[0]);
 
  for(auto entry : counter){
   nodes.push(new Node(entry.first, entry.second, nullptr, nullptr)); //tworzymy liście drzewa, bazując na znakach i ich ilości wystąpień
@@ -194,7 +260,7 @@ if(output1.is_open()) {
       cout << "Nie udalo sie otworzyc pliku output.txt" << endl;
       return 1;
       }
-output1.close();
+
 
 
 
@@ -205,6 +271,11 @@ output1.close();
   encodedLine  += encodedValues[c];
  }
 
+      //zapisujemy zakodowany tekst do pliku
+
+output1 << encodedLine << endl;
+
+output1.close();
 //zapisz zakodowany tekst do pliku output.txt
 // ofstream output("output.txt");
 // if(output.is_open()) {
